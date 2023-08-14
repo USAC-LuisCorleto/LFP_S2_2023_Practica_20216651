@@ -14,21 +14,31 @@ while True:
 
     opcionMen = input("Seleccione una opción: ")
 
+    #Cargando inventario inicial.
     if opcionMen == "1":
         print("-----------------------------")
         print("| CARGAR INVENTARIO INICIAL |")
         print("-----------------------------")
         nombreArchivo = input("Ingrese el nombre del archivo: ")
-        if inventario.leer_archivo(nombreArchivo):
+        productos_cargados = inventario.leer_archivo(nombreArchivo)
+        if productos_cargados:
             print(f"-El archivo {nombreArchivo} fue cargado correctamente.-")
         else:
             print(f"-Hubo un problema al cargar el archivo {nombreArchivo}.-")
 
+    #Cargando archivo de instrucciones.
     if opcionMen == "2":
         print("---------------------------------------")
         print("| CARGAR INSTRUCCIONES DE MOVIMIENTOS |")
         print("---------------------------------------")
+        nombreArchivoMovs = input("Ingrese el nombre del archivo de instrucciones: ")
+        movimientos_leidos = inventario.leer_instrucciones(nombreArchivoMovs)
+        if movimientos_leidos:
+            print(f"-El archivo {nombreArchivoMovs} fue leído correctamente.-")
+        else:
+            print("Este punto se alcanza pero movimientos_leidos es False.")
 
+    #Creación de informe de inventario.
     if opcionMen == "3":
         print("------------------------------")
         print("| CREAR INFORME DE INVENTARIO")
@@ -37,7 +47,8 @@ while True:
     if opcionMen == "4":
         print("Saliendo...")
         break
-
+    
+    #Verificación de los movimientos.
     if opcionMen == "5":
         print("\n")
         print("-------------------------")
