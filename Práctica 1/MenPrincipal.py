@@ -36,13 +36,16 @@ while True:
         if movimientos_leidos:
             print(f"-El archivo {nombreArchivoMovs} fue leído correctamente.-")
         else:
-            print("Este punto se alcanza pero movimientos_leidos es False.")
+            print(f"-Hubo un problema con el arhicov {nombreArchivoMovs}.-")
 
     #Creación de informe de inventario.
     if opcionMen == "3":
         print("------------------------------")
         print("| CREAR INFORME DE INVENTARIO")
         print("------------------------------")
+        nombre_archivo = "informe_inventario.txt"
+        inventario.generar_informe(nombre_archivo)
+        print(f"Informe generado y guardado en el archivo '{nombre_archivo}'.")
 
     if opcionMen == "4":
         print("Saliendo...")
@@ -51,5 +54,5 @@ while True:
     #Verificación de los movimientos.
     if opcionMen == "5":
         print("\n")
-        print("-------------------------")
+        print("-------------------------------------------------------------------------------")
         inventario.imprimir_inventario()

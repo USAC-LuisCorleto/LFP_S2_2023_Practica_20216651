@@ -12,4 +12,3 @@ crear_producto Plátanos;50;1.75;BodegaC
 crear_producto Queso;10;20.50;BodegaD
 crear_producto Helado;80;6.50;BodegaB
 crear_producto Arándanos;5;0.50;BodegaA
-crear_producto Tomates;1000;1.00;BodegaG

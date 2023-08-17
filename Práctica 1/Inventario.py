@@ -27,14 +27,14 @@ class Invent:
 
     #Función para leer el archivo e identificar cada instrucción.
     def leer_instrucciones(self, nombre_archivo):
-        número = 0
+        #número = 0
         try:
             with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
                 lineas = archivo.readlines()
 
             for linea in lineas:
-                número+=1
-                print(f"Procesando línea:, {número} {linea}")
+                #número+=1
+                #print(f"Procesando línea:, {número} {linea}")
                 if linea.startswith("agregar_stock "):
                     partes = linea.strip().split(" ")[1].split(";")
                     if len(partes) == 3:
@@ -65,13 +65,13 @@ class Invent:
                 break
             
         if producto_encontrado is None:
-            print(f"No se encontró el producto {nombre_producto} en la ubicación {ubicacion}")
+            print(f"-No se encontró el producto '{nombre_producto}' en la ubicación {ubicacion}")
             return
         if producto_encontrado.cantidad < cantidad:
-            print(f"No hay suficiente cantidad de {nombre_producto} en la ubicación {ubicacion}")
+            print(f"-No hay suficiente cantidad de '{nombre_producto}' en la ubicación {ubicacion}")
             return
         producto_encontrado.cantidad -= cantidad
-        print(f"Se vendieron {cantidad} unidades de {nombre_producto} en la ubicación {ubicacion}")
+        print(f"+Se vendieron {cantidad} unidades de '{nombre_producto}' en la ubicación {ubicacion}")
 
     #Método para agregar productos al inventario.
     def agregar_stock(self, nombre_producto, cantidad, ubicacion):
@@ -82,16 +82,25 @@ class Invent:
                 producto_encontrado = producto
                 break
         if producto_encontrado is None:
-            print(f"No se encontró el producto '{nombre_producto}' en la ubicación '{ubicacion}'. No se puede agregar stock.")
+            print(f"-No se encontró el producto '{nombre_producto}' en la ubicación '{ubicacion}'. No se puede agregar stock.")
             return
         producto_encontrado.cantidad += cantidad
-        print(f"Se agregaron {cantidad} unidades de '{nombre_producto}' en la ubicación '{ubicacion}'.")
+        print(f"+Se agregaron {cantidad} unidades de '{nombre_producto}' en la ubicación '{ubicacion}'.")
 
     #Impresión del inventario.
     def imprimir_inventario(self):
         for producto in self.productos:
-            print("Nombre:", producto.nombre)
-            print("Cantidad:", producto.cantidad)
-            print("Precio Unitario:", producto.precioUni)
-            print("Ubicación:", producto.ubicacion)
-            print("-------------------------")
+            print("|Nombre:", producto.nombre,"|Cantidad:", producto.cantidad,"|Precio unitario:", producto.precioUni,"|Ubicación:", producto.ubicacion,"|")
+            print("-------------------------------------------------------------------------------")
+
+    def generar_informe(self, nombre_archivo):
+        with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
+            archivo.write("Informe de Inventario:\n")
+            archivo.write("{:<15} {:<10} {:<15} {:<15} {:<10}\n".format("Producto", "Cantidad", "Precio Unitario", "Valor Total", "Ubicación"))
+            archivo.write("-" * 68 + "\n")
+
+            for producto in self.productos:
+                valor_total = producto.cantidad * producto.precioUni
+                archivo.write("{:<15} {:<10} {:<15.2f} {:<15.2f} {:<10}\n".format(producto.nombre, producto.cantidad, producto.precioUni, valor_total, producto.ubicacion))
+
+            archivo.write("-" * 68 + "\n")
