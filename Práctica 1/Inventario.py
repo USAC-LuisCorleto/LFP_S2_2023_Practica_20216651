@@ -63,7 +63,7 @@ class Invent:
             if producto.nombre == nombre_producto and producto.ubicacion == ubicacion:
                 producto_encontrado = producto
                 break
-            
+
         if producto_encontrado is None:
             print(f"-No se encontró el producto '{nombre_producto}' en la ubicación {ubicacion}")
             return
@@ -82,7 +82,7 @@ class Invent:
                 producto_encontrado = producto
                 break
         if producto_encontrado is None:
-            print(f"-No se encontró el producto '{nombre_producto}' en la ubicación '{ubicacion}'. No se puede agregar stock.")
+            print(f"-No se encontró el producto ''{nombre_producto}'' en la ubicación '{ubicacion}'. No se puede agregar stock.")
             return
         producto_encontrado.cantidad += cantidad
         print(f"+Se agregaron {cantidad} unidades de '{nombre_producto}' en la ubicación '{ubicacion}'.")
@@ -93,13 +93,15 @@ class Invent:
             print("|Nombre:", producto.nombre,"|Cantidad:", producto.cantidad,"|Precio unitario:", producto.precioUni,"|Ubicación:", producto.ubicacion,"|")
             print("-------------------------------------------------------------------------------")
 
+    #Generación del informe en un archivo txt
     def generar_informe(self, nombre_archivo):
+        productos_ordenados = sorted(self.productos, key=lambda producto: producto.ubicacion[-1])
         with open(nombre_archivo, 'w', encoding='utf-8') as archivo:
             archivo.write("Informe de Inventario:\n")
             archivo.write("{:<15} {:<10} {:<15} {:<15} {:<10}\n".format("Producto", "Cantidad", "Precio Unitario", "Valor Total", "Ubicación"))
             archivo.write("-" * 68 + "\n")
 
-            for producto in self.productos:
+            for producto in productos_ordenados:
                 valor_total = producto.cantidad * producto.precioUni
                 archivo.write("{:<15} {:<10} {:<15.2f} {:<15.2f} {:<10}\n".format(producto.nombre, producto.cantidad, producto.precioUni, valor_total, producto.ubicacion))
 
